@@ -9,8 +9,8 @@
 # Output:           Outputs results to screen and writes to local file.
 # Sources:          N/A
 #***********************************************************************************/
-#ifndef CS162CLASSES_MAIN_H
-#define CS162CLASSES_MAIN_H
+#ifndef CS162DYNAMICVARIABLESANDMEMORYMANAGEMENT_MAIN_H
+#define CS162DYNAMICVARIABLESANDMEMORYMANAGEMENT_MAIN_H
 #include <iostream>
 #include "activity.h"
 #include "activityList.h"
@@ -28,4 +28,4 @@ void addActivity(Activity &activity);
 void getUserInputChar(char prompt[MAXCHAR], char *dest);
 int getIndexFromUser(char prompt[MAXCHAR]);
 
-#endif //CS162CLASSES_MAIN_H
+#endif //CS162DYNAMICVARIABLESANDMEMORYMANAGEMENT_MAIN_H

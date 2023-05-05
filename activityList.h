@@ -9,24 +9,26 @@
 # Output:           Outputs results to screen and writes to local file.
 # Sources:          N/A
 #***********************************************************************************/
-#ifndef CS162CLASSES_ACTIVITYLIST_H
-#define CS162CLASSES_ACTIVITYLIST_H
+#ifndef CS162DYNAMICVARIABLESANDMEMORYMANAGEMENT_ACTIVITYLIST_H
+#define CS162DYNAMICVARIABLESANDMEMORYMANAGEMENT_ACTIVITYLIST_H
 #include "activity.h"
 
 using namespace std;
 
 const int CAP = 30;
+const int GROWTH = 5;
 
 class ActivityList {
 private:
-    Activity list[CAP];
+    Activity *list;
     int size;
+    int capacity;
+    void growList();
 public:
     ActivityList();
     ActivityList(char []);
     ~ActivityList();
-
-    void addActivity(const Activity &activity) const;
+    
     int getNumActivities() const;
     void showActivities();
     void searchActivitiesByLocation();
@@ -35,6 +37,7 @@ public:
     void loadData(ifstream &inFile);
     void removeActivity();
     void writeData(char fileName[]);
-    int getInsertionPoint(char *tempName, char *insertName) const;
+    int getInsertionPoint(char *tempName, char *insertName);
+    void addActivity(const Activity &activity);
 };
-#endif //CS162CLASSES_ACTIVITYLIST_H
+#endif //CS162DYNAMICVARIABLESANDMEMORYMANAGEMENT_ACTIVITYLIST_H

@@ -23,6 +23,8 @@ using namespace std;
 //output: none
 //return: none
 ActivityList::ActivityList() {
+    capacity = CAP;
+    list = new Activity[capacity];
     size = 0;
 }
 
@@ -47,7 +49,18 @@ ActivityList::~ActivityList()
 {
 }
 
-int ActivityList::getNumActivities() {
+void ActivityList::growList() {
+    capacity += GROWTH;
+    Activity *tempList = new Activity[capacity];
+    for (int i = 0; i < size; i++) {
+        tempList[i] = list[i];
+    }
+    delete [] list;
+    list = tempList;
+    tempList = NULL;
+}
+
+int ActivityList::getNumActivities() const {
     return size;
 }
 
@@ -77,6 +90,10 @@ int ActivityList::getInsertionPoint(char *tempName, char *insertName) {
 void ActivityList::addActivity(const Activity &activity) {
     char insertName[MAXCHAR];
     char tempName[MAXCHAR];
+
+    if (size == CAP) {
+        growList();
+    }
 
     activity.getName(insertName);
     list[size-1].getName(tempName);

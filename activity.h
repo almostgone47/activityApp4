@@ -9,8 +9,8 @@
 # Output:           Outputs results to screen and writes to local file.
 # Sources:          N/A
 #***********************************************************************************/
-#ifndef CS162CLASSES_ACTIVITY_H
-#define CS162CLASSES_ACTIVITY_H
+#ifndef CS162DYNAMICVARIABLESANDMEMORYMANAGEMENT_ACTIVITY_H
+#define CS162DYNAMICVARIABLESANDMEMORYMANAGEMENT_ACTIVITY_H
 
 const int MAXCHAR = 51;
 
@@ -36,4 +36,4 @@ private:
     int rating;
     Type type;
 };
-#endif //CS162CLASSES_ACTIVITY_H
+#endif //CS162DYNAMICVARIABLESANDMEMORYMANAGEMENT_ACTIVITY_H
