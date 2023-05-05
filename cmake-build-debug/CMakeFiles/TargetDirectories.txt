@@ -1,0 +1,3 @@
+/Users/jeremiah/CLionProjects/CS162DynamicVariablesAndMemoryManagement/cmake-build-debug/CMakeFiles/CS162Classes.dir
+/Users/jeremiah/CLionProjects/CS162DynamicVariablesAndMemoryManagement/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/jeremiah/CLionProjects/CS162DynamicVariablesAndMemoryManagement/cmake-build-debug/CMakeFiles/rebuild_cache.dir
