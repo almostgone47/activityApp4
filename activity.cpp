@@ -21,6 +21,11 @@ using namespace std;
 //output: none
 //return: none
 void Activity::setName(char *newName) {
+    if (name) {
+        delete [] name;
+        name = NULL;
+    }
+    name = new char[strlen(newName) + 1];
     strcpy(name, newName);
 };
 
@@ -30,6 +35,11 @@ void Activity::setName(char *newName) {
 //output: none
 //return: none
 void Activity::setLocation(char *newLocation) {
+    if (location) {
+        delete [] location;
+        location = NULL;
+    }
+    location = new char[strlen(newLocation) + 1];
     strcpy(location, newLocation);
 };
 
@@ -39,6 +49,11 @@ void Activity::setLocation(char *newLocation) {
 //output: none
 //return: none
 void Activity::setLevel(char *newLevel) {
+    if (level) {
+        delete [] level;
+        level = NULL;
+    }
+    level = new char[strlen(newLevel) + 1];
     strcpy(level, newLevel);
 };
 

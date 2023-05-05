@@ -30,9 +30,9 @@ public:
     void printActivity();
 
 private:
-    char name[MAXCHAR];
-    char location[MAXCHAR];
-    char level[MAXCHAR];
+    char *name;
+    char *location;
+    char *level;
     int rating;
     Type type;
 };
