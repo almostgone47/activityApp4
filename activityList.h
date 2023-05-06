@@ -37,7 +37,7 @@ public:
     void loadData(ifstream &inFile);
     void removeActivity();
     void writeData(char fileName[]);
-    int getInsertionPoint(char *tempName, char *insertName);
-    void addActivity(const Activity &activity);
+    int getInsertionPoint(char *tempName, const char *insertName);
+    void addActivity(Activity &activity);
 };
 #endif //CS162DYNAMICVARIABLESANDMEMORYMANAGEMENT_ACTIVITYLIST_H

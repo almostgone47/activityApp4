@@ -34,6 +34,8 @@ ActivityList::ActivityList() {
 //output: none
 //return: none
 ActivityList::ActivityList(char fileName[]) {
+    capacity = CAP;
+    list = new Activity[capacity];
     size = 0;
     ifstream inFile;
     openFile(fileName, inFile);
@@ -45,13 +47,16 @@ ActivityList::ActivityList(char fileName[]) {
 //input:  none.
 //output: none
 //return: none
-ActivityList::~ActivityList()
-{
+ActivityList::~ActivityList() {
+    if (list) {
+        delete [] list;
+        list = nullptr;
+    }
 }
 
 void ActivityList::growList() {
     capacity += GROWTH;
-    Activity *tempList = new Activity[capacity];
+    auto *tempList = new Activity[capacity];
     for (int i = 0; i < size; i++) {
         tempList[i] = list[i];
     }
@@ -69,7 +74,7 @@ int ActivityList::getNumActivities() const {
 //        of activity passed in.
 //output: none
 //return: int plus one for the index to insert the activity at in list.
-int ActivityList::getInsertionPoint(char *tempName, char *insertName) {
+int ActivityList::getInsertionPoint(char *tempName, const char *insertName) {
     int i;
     for (i = size - 1; tempName[0] >= insertName[0]; i--) {
         if (i >= 0) {
@@ -87,21 +92,22 @@ int ActivityList::getInsertionPoint(char *tempName, char *insertName) {
 //        ref to activity being created.
 //output: none
 //return: none
-void ActivityList::addActivity(const Activity &activity) {
-    char insertName[MAXCHAR];
-    char tempName[MAXCHAR];
-
+void ActivityList::addActivity(Activity &activity) {
     if (size == CAP) {
         growList();
     }
+    /// THIS IS A PROBLEM ** MUST CHANGE THIS
+    if (size == 0) {
+        list[0] = activity;
+        return;
+    }
+    char insertName[MAXCHAR];
+    char tempName[MAXCHAR];
 
     activity.getName(insertName);
     list[size-1].getName(tempName);
 
-    if (size == 0) {
-        list[0] = activity;
-    }
-    else if (tempName[0] >= insertName[0]) {
+    if (tempName[0] >= insertName[0]) {
         int index = getInsertionPoint(tempName, insertName);
         list[index] = activity;
     }
@@ -124,7 +130,7 @@ void ActivityList::showActivities() {
         activity.printActivity();
     }
     cout << endl;
-};
+}
 
 //Name:   searchActivitiesByLocation()
 //Desc:   Asks user for location of activity to search for and prints all activities that match

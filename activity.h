@@ -16,13 +16,19 @@ const int MAXCHAR = 51;
 
 class Activity {
 public:
+    Activity();
+    // the big three
+    ~Activity();
+    Activity(const Activity &activity);
+    const Activity & operator= (const Activity &activity);
+
     enum Type {athletic, food, arts, games, other};
     void setName(char *newName);
     void setLocation(char *newLocation);
     void setLevel(char *newLevel);
     void setRating(int newRating);
     void setType(Type newType);
-    void getName(char *returnName) const;
+    void getName(char *returnName);
     void getLocation(char *returnLocation) const;
     void getLevel(char *returnLevel) const;
     int getRating() const;

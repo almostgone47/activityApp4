@@ -15,6 +15,71 @@
 
 using namespace std;
 
+//Name:   Activity()
+//Desc:   Copy constructor for Activity class.
+//input:  none.
+//output: none
+//return: none
+Activity::Activity()
+{
+    name = new char[MAXCHAR];
+    strcpy(name, "No name");
+    location = new char[MAXCHAR];
+    strcpy(location, "No location");
+    level = new char[MAXCHAR];
+    strcpy(level, "No level");
+    type = static_cast<Activity::Type>(0);
+    rating = 0;
+}
+
+//Name:   ~Activity()
+//Desc:   Destructor for Activity class.
+//input:  none.
+//output: none
+//return: none
+Activity::~Activity() {
+    if (name) {
+        delete [] name;
+        name = NULL;
+    }
+    if (location) {
+        delete [] location;
+        location = NULL;
+    }
+    if (level) {
+        delete [] level;
+        level = NULL;
+    }
+}
+
+//Name:   Activity()
+//Desc:   Copy constructor for Activity class.
+//input:  none.
+//output: none
+//return: none
+Activity::Activity(const Activity &activity)
+{
+    name = new char[strlen(activity.name) + 1];
+    location = new char[strlen(activity.location) + 1];
+    level = new char[strlen(activity.level)];
+    *this = activity;
+}
+
+const Activity & Activity::operator= (const Activity& activity) {
+    if (this == &activity) {
+        return *this;
+    }
+    else {
+        this->setName(activity.name);
+        this->setLocation(activity.location);
+        this->setLevel(activity.level);
+        this->type = activity.type;
+        this->rating = activity.rating;
+
+        return *this;
+    }
+}
+
 //Name:   setName()
 //Desc:   Sets the name property of an Activity.
 //input:  A ref to a variable to copy the value held at the name property.
@@ -80,7 +145,7 @@ void Activity::setType(Type newType) {
 //input:  A ref to a variable to copy the value held at the name property.
 //output: none
 //return: none
-void Activity::getName(char *returnName) const {
+void Activity::getName(char *returnName) {
     strcpy(returnName, name);
 };
 

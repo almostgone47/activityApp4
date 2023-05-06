@@ -117,7 +117,7 @@ int getIndexFromUser(char prompt[MAXCHAR]) {
 //input:  A destination to store input in and a text prompt for the user to see.
 //output: A prompt passed as an argument.
 //return: An char array.
-void getUserInputChar(char prompt[MAXCHAR], char *dest) {
+void getUserInputChar(char const prompt[MAXCHAR], char *dest) {
     char temp[MAXCHAR];
     cout << prompt;
     cin.get(temp, MAXCHAR, '\n');
