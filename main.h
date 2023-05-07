@@ -26,6 +26,6 @@ Activity::Type readType(char num);
 void openFile(char fileName[], ofstream &outFile);
 void addActivity(Activity &activity);
 void getUserInputChar(char const prompt[MAXCHAR], char *dest);
-int getIndexFromUser(char prompt[MAXCHAR]);
+int getIndexFromUser(char const prompt[MAXCHAR]);
 
 #endif //CS162DYNAMICVARIABLESANDMEMORYMANAGEMENT_MAIN_H

@@ -54,6 +54,11 @@ ActivityList::~ActivityList() {
     }
 }
 
+//Name:   growList()
+//Desc:   Increases the size of the list when capacity is reached.
+//input:  none.
+//output: none
+//return: none
 void ActivityList::growList() {
     capacity += GROWTH;
     auto *tempList = new Activity[capacity];
@@ -62,9 +67,14 @@ void ActivityList::growList() {
     }
     delete [] list;
     list = tempList;
-    tempList = NULL;
+    tempList = nullptr;
 }
 
+//Name:   getNumActivities()
+//Desc:   Gets the total number of activities in the activity list.
+//input:  none.
+//output: none
+//return: none
 int ActivityList::getNumActivities() const {
     return size;
 }
@@ -96,9 +106,10 @@ void ActivityList::addActivity(Activity &activity) {
     if (size == CAP) {
         growList();
     }
-    /// THIS IS A PROBLEM ** MUST CHANGE THIS
+
     if (size == 0) {
         list[0] = activity;
+        size++;
         return;
     }
     char insertName[MAXCHAR];
@@ -107,7 +118,7 @@ void ActivityList::addActivity(Activity &activity) {
     activity.getName(insertName);
     list[size-1].getName(tempName);
 
-    if (tempName[0] >= insertName[0]) {
+    if (tempName[0] > insertName[0]) {
         int index = getInsertionPoint(tempName, insertName);
         list[index] = activity;
     }

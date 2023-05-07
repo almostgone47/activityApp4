@@ -31,15 +31,15 @@ public:
     void getName(char *returnName);
     void getLocation(char *returnLocation) const;
     void getLevel(char *returnLevel) const;
-    int getRating() const;
-    Type getType() const;
+    [[nodiscard]] int getRating() const;
+    [[nodiscard]] Type getType() const;
     void printActivity();
 
 private:
     char *name;
     char *location;
     char *level;
-    int rating;
+    int rating{};
     Type type;
 };
 #endif //CS162DYNAMICVARIABLESANDMEMORYMANAGEMENT_ACTIVITY_H

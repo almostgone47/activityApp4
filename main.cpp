@@ -103,7 +103,7 @@ char getUserInput()
 //input:  A number for the index the user would like to use.
 //output: A prompt passed as an argument.
 //return: An integer.
-int getIndexFromUser(char prompt[MAXCHAR]) {
+int getIndexFromUser(char const prompt[MAXCHAR]) {
     int index;
     cout << prompt;
     cin >> index;
