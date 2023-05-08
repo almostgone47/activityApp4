@@ -112,6 +112,7 @@ void ActivityList::addActivity(Activity &activity) {
         size++;
         return;
     }
+
     char insertName[MAXCHAR];
     char tempName[MAXCHAR];
 
@@ -125,6 +126,7 @@ void ActivityList::addActivity(Activity &activity) {
     else {
         list[size] = activity;
     }
+
     size++;
 }
 

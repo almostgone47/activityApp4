@@ -62,6 +62,7 @@ Activity::Activity(const Activity &activity)
     name = new char[strlen(activity.name) + 1];
     location = new char[strlen(activity.location) + 1];
     level = new char[strlen(activity.level)];
+    type = activity.type;
     *this = activity;
 }
 
