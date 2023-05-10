@@ -11,6 +11,7 @@
 #***********************************************************************************/
 #include <iostream>
 #include <fstream>
+#include <cstring>
 #include "activityList.h"
 #include "activity.h"
 #include "main.h"

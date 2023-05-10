@@ -10,6 +10,7 @@
 # Sources:          N/A
 #***********************************************************************************/
 #include <iostream>
+#include <cstring>
 #include <fstream>
 #include "activityList.h"
 #include "activity.h"
