@@ -83,6 +83,7 @@ int ActivityList::getInsertionPoint(char *tempName, const char *insertName) {
 void ActivityList::addActivity(Activity &activity) {
     Node *curr = nullptr, *prev = nullptr, *newNode = nullptr;
     char temp1[MAXCHAR], temp2[MAXCHAR];
+    newNode = new Node;
     newNode->data = activity;
     newNode->next = nullptr;
 
@@ -91,26 +92,30 @@ void ActivityList::addActivity(Activity &activity) {
         head = newNode;
         tail = newNode;
     }
-    else {
+    else
+    {
         // else if head is greater than activity make head=activity and head->curr
+        curr = head;
+        curr->data.getName(temp1);
         activity.getName(temp2);
-        for (curr = head; curr; curr = curr->next) {
-            curr->data.getName(temp1);
-
-            if (!curr->next) {
-                tail->next = newNode;
-                tail = newNode;
+        while (curr && temp1[0] < temp2[0]) {
+            prev = curr;
+            curr = curr->next;
+            if (curr) {
+                curr->data.getName(temp1);
             }
-            else if (temp1[0] > temp2[0]) {
-                prev = curr;
-                curr = newNode;
-                curr->next = prev;
-            }
-            else {
-                newNode->next = curr;
-                head = newNode;
-            }
-            // else make curr->next = activity
+        }
+        if (!curr) {
+            tail->next = newNode;
+            tail = newNode;
+        }
+        else if (prev) {
+            newNode->next = curr;
+            prev->next = newNode;
+        }
+        else {
+            newNode->next = curr;
+            head = newNode;
         }
     }
     size++;
@@ -122,14 +127,15 @@ void ActivityList::addActivity(Activity &activity) {
 //output: Displays all activities with a number at the start of each line.
 //return: none
 void ActivityList::showActivities() {
-    Node *curr = nullptr;
+    Node *curr = head;
     int i = 1;
-    for(curr = head; curr; curr = curr->next)
+    while(curr)
     {
 
         cout << i << ".";
         curr->data.printActivity();
         i++;
+        curr = curr->next;
     }
     cout << endl;
 }
