@@ -24,8 +24,8 @@ using namespace std;
 //output: none
 //return: none
 ActivityList::ActivityList() {
-    capacity = CAP;
-    list = new Activity[capacity];
+    head = NULL;
+    tail = NULL;
     size = 0;
 }
 
@@ -35,8 +35,6 @@ ActivityList::ActivityList() {
 //output: none
 //return: none
 ActivityList::ActivityList(char fileName[]) {
-    capacity = CAP;
-    list = new Activity[capacity];
     size = 0;
     ifstream inFile;
     openFile(fileName, inFile);
@@ -49,26 +47,13 @@ ActivityList::ActivityList(char fileName[]) {
 //output: none
 //return: none
 ActivityList::~ActivityList() {
-    if (list) {
-        delete [] list;
-        list = nullptr;
+    Node *curr = head;
+    while (curr) {
+        head = curr->next;
+        delete curr;
+        curr = head;
     }
-}
-
-//Name:   growList()
-//Desc:   Increases the size of the list when capacity is reached.
-//input:  none.
-//output: none
-//return: none
-void ActivityList::growList() {
-    capacity += GROWTH;
-    auto *tempList = new Activity[capacity];
-    for (int i = 0; i < size; i++) {
-        tempList[i] = list[i];
-    }
-    delete [] list;
-    list = tempList;
-    tempList = nullptr;
+    tail = nullptr;
 }
 
 //Name:   getNumActivities()
@@ -86,15 +71,7 @@ int ActivityList::getNumActivities() const {
 //output: none
 //return: int plus one for the index to insert the activity at in list.
 int ActivityList::getInsertionPoint(char *tempName, const char *insertName) {
-    int i;
-    for (i = size - 1; tempName[0] >= insertName[0]; i--) {
-        if (i >= 0) {
-            list[i - 1].getName(tempName);
-        }
-        list[i + 1] = list[i];
-    }
-
-    return i + 1;
+    // may not need this method
 }
 
 //Name:   addActivity()
@@ -104,30 +81,38 @@ int ActivityList::getInsertionPoint(char *tempName, const char *insertName) {
 //output: none
 //return: none
 void ActivityList::addActivity(Activity &activity) {
-    if (size == CAP) {
-        growList();
-    }
+    Node *curr = nullptr, *prev = nullptr, *newNode = nullptr;
+    char temp1[MAXCHAR], temp2[MAXCHAR];
+    newNode->data = activity;
+    newNode->next = nullptr;
 
-    if (size == 0) {
-        list[0] = activity;
-        size++;
-        return;
-    }
-
-    char insertName[MAXCHAR];
-    char tempName[MAXCHAR];
-
-    activity.getName(insertName);
-    list[size-1].getName(tempName);
-
-    if (tempName[0] > insertName[0]) {
-        int index = getInsertionPoint(tempName, insertName);
-        list[index] = activity;
+    // if head is null make head and tail
+    if (!head) {
+        head = newNode;
+        tail = newNode;
     }
     else {
-        list[size] = activity;
-    }
+        // else if head is greater than activity make head=activity and head->curr
+        activity.getName(temp2);
+        for (curr = head; curr; curr = curr->next) {
+            curr->data.getName(temp1);
 
+            if (!curr->next) {
+                tail->next = newNode;
+                tail = newNode;
+            }
+            else if (temp1[0] > temp2[0]) {
+                prev = curr;
+                curr = newNode;
+                curr->next = prev;
+            }
+            else {
+                newNode->next = curr;
+                head = newNode;
+            }
+            // else make curr->next = activity
+        }
+    }
     size++;
 }
 
@@ -137,11 +122,14 @@ void ActivityList::addActivity(Activity &activity) {
 //output: Displays all activities with a number at the start of each line.
 //return: none
 void ActivityList::showActivities() {
-    for(int i = 0; i < size; i++)
+    Node *curr = nullptr;
+    int i = 1;
+    for(curr = head; curr; curr = curr->next)
     {
-        Activity activity = list[i];
-        cout << i+1 << ".";
-        activity.printActivity();
+
+        cout << i << ".";
+        curr->data.printActivity();
+        i++;
     }
     cout << endl;
 }
@@ -153,18 +141,19 @@ void ActivityList::showActivities() {
 //output: All activities matching search.
 //return: none
 void ActivityList::searchActivitiesByLocation() {
+    Node *curr = nullptr;
     char searchLocation[MAXCHAR];
     getUserInputChar("Enter location name: ", searchLocation);
     char storedLocation[MAXCHAR];
 
     bool activityFound = false;
-    for(int i = 0; i < size; i++)
+    for (curr = head; curr; curr = curr->next)
     {
-        list[i].getLocation(storedLocation);
+        curr->data.getLocation(storedLocation);
         if(strstr(searchLocation, storedLocation) != NULL)
         {
             activityFound = true;
-            list[i].printActivity();
+            curr->data.printActivity();
         }
     }
 
@@ -180,19 +169,20 @@ void ActivityList::searchActivitiesByLocation() {
 //output: All activities matching search.
 //return: none
 void ActivityList::searchActivitiesByType() {
+    Node *curr = nullptr;
     cout << "Enter Type number(0-Athletic, 1-Food, 2-Arts, 3-Games, 4-Other): ";
     char letter;
     cin >> letter;
     Activity::Type tempType = readType(letter);
 
     bool activityFound = false;
-    for(int i = 0; i < size; i++)
+    for (curr = head; curr; curr = curr->next)
     {
-        Activity::Type type = list[i].getType();
+        Activity::Type type = curr->data.getType();
         if(type == tempType)
         {
             activityFound = true;
-            list[i].printActivity();
+            curr->data.printActivity();
         }
     }
 
@@ -208,18 +198,19 @@ void ActivityList::searchActivitiesByType() {
 //output: All activities matching search.
 //return: none
 void ActivityList::searchActivitiesByName() {
+    Node *curr = nullptr;
     char searchName[MAXCHAR];
     getUserInputChar("Enter the activity name (50 characters or less): ", searchName);
     char activityName[MAXCHAR];
 
     bool activityFound = false;
-    for(int i = 0; i < size; i++)
+    for(curr = head; curr; curr = curr->next)
     {
-        list[i].getName(activityName);
+        curr->data.getName(activityName);
         if(strstr(searchName, activityName) != NULL)
         {
             activityFound = true;
-            list[i].printActivity();
+            curr->data.printActivity();
         }
     }
 
@@ -234,17 +225,18 @@ void ActivityList::searchActivitiesByName() {
 //output: none
 //return: none
 void ActivityList::removeActivity() {
-    int index = getIndexFromUser("Pick the index to remove: ");
-
-    if(index < size && index > -1)
-    {
-        for(int i = index; i < size; i++)
-        {
-            list[i-1] = list[i];
-        }
-    }
-    size--;
-    cout << "Activity removed! " << endl;
+//    Node *curr = nullptr, *prev = nullptr;
+//    int index = getIndexFromUser("Pick the index to remove: ");
+//    int i = 0;
+//    if(index <= size && index > -1)
+//    {
+//        for(curr = head; curr; curr = curr->next)
+//        {
+//            list[i-1] = list[i];
+//        }
+//    }
+//    size--;
+//    cout << "Activity removed! " << endl;
 }
 
 //Name:   writeData()
@@ -253,19 +245,20 @@ void ActivityList::removeActivity() {
 //output: A small response showing user has saved data.
 //return: none
 void ActivityList::writeData(char fileName[]) {
+    Node *curr = nullptr;
     ofstream outFile;
     openFile(fileName, outFile);
     char tempName[MAXCHAR], tempLocation[MAXCHAR], tempLevel[MAXCHAR];
     int tempRating;
     Activity::Type tempType;
 
-    for(int i = 0; i < size; i++)
+    for(curr = head; curr; curr = curr->next)
     {
-        list[i].getName(tempName);
-        list[i].getLocation(tempLocation);
-        list[i].getLevel(tempLevel);
-        tempRating = list[i].getRating();
-        tempType = list[i].getType();
+        curr->data.getName(tempName);
+        curr->data.getLocation(tempLocation);
+        curr->data.getLevel(tempLevel);
+        tempRating = curr->data.getRating();
+        tempType = curr->data.getType();
         outFile << tempName << ";" << tempLocation << ";" << tempLevel << ";" << tempRating << ";" << tempType << endl;
     }
     outFile.close();
