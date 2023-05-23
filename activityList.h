@@ -1,7 +1,7 @@
 /***********************************************************************************
 # Author:           Jeremiah Barro
-# Assignment:       Assignment 2, Dynamic Variables and Memory Management Assignment
-# Date:             May 5th, 2023
+# Assignment:       Assignment 3, Linked Lists
+# Date:             May 23rd, 2023
 # Description:      This is a console app that allows users to create, read
                     and destroy Activities which are read and stored to a local
                     file.
@@ -9,8 +9,8 @@
 # Output:           Outputs results to screen and writes to local file.
 # Sources:          N/A
 #***********************************************************************************/
-#ifndef CS162DYNAMICVARIABLESANDMEMORYMANAGEMENT_ACTIVITYLIST_H
-#define CS162DYNAMICVARIABLESANDMEMORYMANAGEMENT_ACTIVITYLIST_H
+#ifndef CS162LINKEDLISTS_ACTIVITYLIST_H
+#define CS162LINKEDLISTS_ACTIVITYLIST_H
 #include "activity.h"
 
 using namespace std;
@@ -40,4 +40,4 @@ public:
     int getInsertionPoint(char *tempName, const char *insertName);
     void addActivity(Activity &activity);
 };
-#endif //CS162DYNAMICVARIABLESANDMEMORYMANAGEMENT_ACTIVITYLIST_H
+#endif //CS162LINKEDLISTS_ACTIVITYLIST_H
